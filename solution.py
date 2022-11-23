@@ -9,208 +9,208 @@ class ExpertCountingModel(ACTR):
     goal=Buffer()
     statePillar=Buffer()
 
-    # Update topOfMid if small was placed ontop of mid. [Only allowed possibility]
-    def checkStackDiskMid(statePillar='latest_disk:small latest_pillar:?y mid:?y latest_pillar:!none latest_disk:!none latest_disk:!mid clear:none'):
+    # Update topOftwo if three was placed ontop of two. [Only allowed possibility]
+    def checkStackDiskTwo(statePillar='latest_disk:three latest_pillar:?y two:?y latest_pillar:!none latest_disk:!none latest_disk:!two clear:none'):
         # als er al een disk was op y dan 
-        print 'Disk small on top of mid'
-        statePillar.modify(topOfMid='small')
+        print 'Disk three on top of Disk two'
+        statePillar.modify(topOftwo='three')
         statePillar.modify(latest_disk='none')
         statePillar.modify(latest_pillar='none')
         statePillar.modify(target_pillar='none')
         statePillar.modify(selected_disk='none')
 
-    # Update topOfBig if something was placed ontop of big
-    def checkStackDiskBig(statePillar='latest_disk:?x latest_pillar:?y big:?y latest_pillar:!none latest_disk:!none latest_disk:!big clear:none'):
-        print 'Disk', x, 'on top of big'
-        statePillar.modify(topOfBig=x)
+    # Update topOfone if something was placed ontop of one
+    def checkStackDiskone(statePillar='latest_disk:?x latest_pillar:?y one:?y latest_pillar:!none latest_disk:!none latest_disk:!one clear:none'):
+        print 'Disk', x, 'on top of Disk one'
+        statePillar.modify(topOfone=x)
         statePillar.modify(latest_disk='none')
         statePillar.modify(latest_pillar='none')
         statePillar.modify(target_pillar='none')
         statePillar.modify(selected_disk='none')
 
-    # Small disk has been place on the 'floor' level
-    def checkStackDiskResetSmall(statePillar='latest_disk:small latest_pillar:?y mid:!?y big:!?y latest_pillar:!none clear:none'):
+    # three disk has been place on the 'floor' level
+    def checkStackDiskResetthree(statePillar='latest_disk:three latest_pillar:?y two:!?y one:!?y latest_pillar:!none clear:none'):
         # als er al een disk was op y dan 
-        print 'Disk small on top of floor'
+        print 'Disk three on floor'
         statePillar.modify(latest_disk='none')
         statePillar.modify(latest_pillar='none')
         statePillar.modify(target_pillar='none')
         statePillar.modify(selected_disk='none')
 
-    # Mid disk has been place on the 'floor' level
-    def checkStackDiskResetMid(statePillar='latest_disk:mid latest_pillar:?y small:!?y big:!?y latest_pillar:!none latest_disk:!none clear:none'):
+    # two disk has been place on the 'floor' level
+    def checkStackDiskResettwo(statePillar='latest_disk:two latest_pillar:?y three:!?y one:!?y latest_pillar:!none latest_disk:!none clear:none'):
         # als er al een disk was op y dan 
-        print 'Disk mid on top of floor'
+        print 'Disk two on floor'
         statePillar.modify(latest_disk='none')
         statePillar.modify(latest_pillar='none')
         statePillar.modify(target_pillar='none')
         statePillar.modify(selected_disk='none')
 
-    # Big disk has been place on the 'floor' level
-    def checkStackDiskResetBig(statePillar='latest_disk:big latest_pillar:?y mid:!?y small:!?y latest_pillar:!none latest_disk:!none clear:none'):
+    # one disk has been place on the 'floor' level
+    def checkStackDiskResetone(statePillar='latest_disk:one latest_pillar:?y two:!?y three:!?y latest_pillar:!none latest_disk:!none clear:none'):
         # als er al een disk was op y dan 
-        print 'Disk big on top of floor'
+        print 'Disk one on floor'
         statePillar.modify(latest_disk='none')
         statePillar.modify(latest_pillar='none')
         statePillar.modify(target_pillar='none')
         statePillar.modify(selected_disk='none')
 
         
-    # Small could have been on top of mid and big
-    def simpleExecutionSmallTopOfMid(statePillar='topOfSmall:free topOfMid:small selected_disk:small target_pillar:?y small:!?y latest_disk:none latest_pillar:none clear:none'):
-        print 'Moved disk small to pillar', y
-        # small to pillar [y]
-        statePillar.modify(small=y)
+    # three could have been on top of two and one
+    def simpleExecutionthreeTopOftwo(statePillar='topOfthree:free topOftwo:three selected_disk:three target_pillar:?y three:!?y latest_disk:none latest_pillar:none clear:none'):
+        print 'Moved disk three to pillar', y
+        # three to pillar [y]
+        statePillar.modify(three=y)
 
-        # mid is now free
-        statePillar.modify(topOfMid='free')
+        # two is now free
+        statePillar.modify(topOftwo='free')
         statePillar.modify(target_pillar='none')
 
         # Update based on latest action
-        statePillar.modify(latest_disk='small')
+        statePillar.modify(latest_disk='three')
         statePillar.modify(latest_pillar=y)
 
-    def simpleExecutionSmallTopOfBig(statePillar='topOfSmall:free topOfBig:small selected_disk:small target_pillar:?y target_pillar:!none small:!?y latest_disk:none latest_pillar:none clear:none'):
-        print 'Moved disk small', 'to pillar', y
-        # small to pillar [y]
-        statePillar.modify(small=y)
+    def simpleExecutionthreeTopOfone(statePillar='topOfthree:free topOfone:three selected_disk:three target_pillar:?y target_pillar:!none three:!?y latest_disk:none latest_pillar:none clear:none'):
+        print 'Moved disk three', 'to pillar', y
+        # three to pillar [y]
+        statePillar.modify(three=y)
 
-        # big is now free
-        statePillar.modify(topOfBig='free')
+        # one is now free
+        statePillar.modify(topOfone='free')
         statePillar.modify(target_pillar='none')
 
         # Update based on latest action
-        statePillar.modify(latest_disk='small')
+        statePillar.modify(latest_disk='three')
         statePillar.modify(latest_pillar=y)
 
-    ## small disk was on 'floor' level
-    def simpleExecutionSmallNotOnTop(statePillar='topOfSmall:free topOfBig:!small topOfMid:!small selected_disk:small target_pillar:?y small:!?y latest_disk:none latest_pillar:none clear:none'):
-        print 'Moved disk small', 'to pillar', y
-        # small to pillar [y]
-        statePillar.modify(small=y)
+    ## three disk was on 'floor' level
+    def simpleExecutionthreeNotOnTop(statePillar='topOfthree:free topOfone:!three topOftwo:!three selected_disk:three target_pillar:?y three:!?y latest_disk:none latest_pillar:none clear:none'):
+        print 'Moved disk three', 'to pillar', y
+        # three to pillar [y]
+        statePillar.modify(three=y)
 
         # Update based on latest action
-        statePillar.modify(latest_disk='small')
+        statePillar.modify(latest_disk='three')
         statePillar.modify(latest_pillar=y)
 
-    # mid disk was on top of big
-    def simpleExecutionMidTopOfBig(statePillar='topOfMid:free topOfBig:mid selected_disk:mid target_pillar:?y mid:!?y latest_disk:none latest_pillar:none clear:none'):
-        print 'Moved disk mid', 'to pillar', y
-        # mid to pillar [y]
-        statePillar.modify(mid=y)
+    # two disk was on top of one
+    def simpleExecutiontwoTopOfone(statePillar='topOftwo:free topOfone:two selected_disk:two target_pillar:?y two:!?y latest_disk:none latest_pillar:none clear:none'):
+        print 'Moved disk two', 'to pillar', y
+        # two to pillar [y]
+        statePillar.modify(two=y)
 
-        # big is now free
-        statePillar.modify(topOfBig='free')
+        # one is now free
+        statePillar.modify(topOfone='free')
 
         # Update based on latest action
-        statePillar.modify(latest_disk='mid')
+        statePillar.modify(latest_disk='two')
         statePillar.modify(latest_pillar=y)
         
 
-    ## mid disk was on 'floor' level
-    def simpleExecutionMidNotOnTop(statePillar='topOfMid:free topOfBig:!mid selected_disk:mid target_pillar:?y mid:!?y latest_disk:none latest_pillar:none clear:none'):
-        print 'Moved disk mid', 'to pillar', y
-        # mid to pillar [y]
-        statePillar.modify(mid=y)
+    ## two disk was on 'floor' level
+    def simpleExecutiontwoNotOnTop(statePillar='topOftwo:free topOfone:!two selected_disk:two target_pillar:?y two:!?y latest_disk:none latest_pillar:none clear:none'):
+        print 'Moved disk two', 'to pillar', y
+        # two to pillar [y]
+        statePillar.modify(two=y)
         statePillar.modify(target_pillar='none')
 
 
         # Update based on latest action
-        statePillar.modify(latest_disk='mid')
+        statePillar.modify(latest_disk='two')
         statePillar.modify(latest_pillar=y)
     
-    def simpleExecutionBig(statePillar='topOfBig:free selected_disk:big target_pillar:?y big:!y small:!?y mid:!?y latest_disk:none latest_pillar:none clear:none'):
-        print 'Moved disk big', 'to pillar', y
-        # big to pillar [y]
-        statePillar.modify(big=y)
+    def simpleExecutionone(statePillar='topOfone:free selected_disk:one target_pillar:?y one:!y three:!?y two:!?y latest_disk:none latest_pillar:none clear:none'):
+        print 'Moved disk one', 'to pillar', y
+        # one to pillar [y]
+        statePillar.modify(one=y)
         statePillar.modify(target_pillar='none')
 
         # Update based on latest action
-        statePillar.modify(latest_disk='big')
+        statePillar.modify(latest_disk='one')
         statePillar.modify(latest_pillar=y)
 
-    def ifNotAllOnThird(goal='small:third mid:third big:third', statePillar='big:!third selected_disk:!big target_pillar:none latest_disk:none latest_pillar:none clear:none'):
-        # If big is not on third make placing big on third the goal
-        print 'Big not on third'
-        statePillar.modify(selected_disk='big')
-        statePillar.modify(target_pillar='third')
+    def ifNotAllOnC(goal='three:C two:C one:C', statePillar='one:!C selected_disk:!one target_pillar:none latest_disk:none latest_pillar:none clear:none'):
+        # If one is not on C make placing one on C the goal
+        print 'Disk One not on Peg C'
+        statePillar.modify(selected_disk='one')
+        statePillar.modify(target_pillar='C')
 
-    def twoMissingOnThird(goal='small:third mid:third big:third', statePillar='big:third mid:!third selected_disk:!mid target_pillar:none latest_disk:none latest_pillar:none clear:none'):
-        # If big is not on third make placing big on third the goal
-        print 'mid not on third'
-        statePillar.modify(selected_disk='mid')
-        statePillar.modify(target_pillar='third')
+    def twoMissingOnC(goal='three:C two:C one:C', statePillar='one:C two:!C selected_disk:!two target_pillar:none latest_disk:none latest_pillar:none clear:none'):
+        # If one is not on C make placing one on C the goal
+        print 'Disk Two not on Peg C'
+        statePillar.modify(selected_disk='two')
+        statePillar.modify(target_pillar='C')
 
-    def lastDiskMissingOnThird(goal='small:third mid:third big:third', statePillar='big:third mid:third small:!third selected_disk:!small target_pillar:none latest_disk:none latest_pillar:none clear:none'):
-        # If big is not on third make placing big on third the goal
-        print 'small not on third'
-        statePillar.modify(selected_disk='small')
-        statePillar.modify(target_pillar='third')
+    def lastDiskMissingOnC(goal='three:C two:C one:C', statePillar='one:C two:C three:!C selected_disk:!three target_pillar:none latest_disk:none latest_pillar:none clear:none'):
+        # If one is not on C make placing one on C the goal
+        print 'Disk Three not on Peg C'
+        statePillar.modify(selected_disk='three')
+        statePillar.modify(target_pillar='C')
 
-    def clearThirdPillar(goal='small:third mid:third big:third', statePillar='selected_disk:big target_pillar:third big:?x topOfBig:free latest_disk:none latest_pillar:none clear:none small:third'):
-        print 'Small is on third, moving small to the other pillar (which is not third or',x,')'
-        statePillar.modify(selected_disk='small')
-        statePillar.modify(target_pillar='second') 
+    def clearCPillar(goal='three:C two:C one:C', statePillar='selected_disk:one target_pillar:C one:?x topOfone:free latest_disk:none latest_pillar:none clear:none three:C'):
+        print 'Disk Three is on Peg C, moving Disk Three to the other peg (which is not Peg C or Peg',x,')'
+        statePillar.modify(selected_disk='three')
+        statePillar.modify(target_pillar='B') 
 
-    # Clear mid if big is on third, and so next up.
-    def clearMidWhenBigAndMidOnFirst(goal='small:third mid:third big:third', statePillar='selected_disk:big target_pillar:third big:first topOfMid:!free topOfBig:mid  latest_disk:none latest_pillar:none clear:none'):
-        # Create subgoal to get big free
-        print 'Mid is not clear. Set clearing mid as goal'
-        statePillar.modify(clear='mid')
+    # Clear Disk Two if Disk One is on C
+    def clearTwoWhenOneAndTwoOnA(goal='three:C two:C one:C', statePillar='selected_disk:one target_pillar:C one:A topOftwo:!free topOfone:two  latest_disk:none latest_pillar:none clear:none'):
+        # Create subgoal to get one free
+        print 'Disk Two is not clear. Set clearing Disk Two as goal'
+        statePillar.modify(clear='two')
 
-    # Clear mid if big is on third, and so next up.
-    def clearMid(goal='small:third mid:third big:third', statePillar='selected_disk:mid target_pillar:third big:third topOfMid:!free latest_disk:none latest_pillar:none clear:none'):
-        # Create subgoal to get big free
-        print 'Mid is not clear. Set clearing mid as goal'
-        statePillar.modify(clear='mid')
+    # Clear Disk Two if Disk One is on C
+    def cleartwo(goal='three:C two:C one:C', statePillar='selected_disk:two target_pillar:C one:C topOftwo:!free latest_disk:none latest_pillar:none clear:none'):
+        # Create subgoal to get one free
+        print 'Disk Two is not clear. Set clearing Disk Two as goal'
+        statePillar.modify(clear='two')
 
-    def clearBig(goal='small:third mid:third big:third', statePillar='selected_disk:big target_pillar:third topOfBig:!free latest_disk:none latest_pillar:none clear:none'):
-        # Create subgoal to get big free
-        print 'Big is not clear. Set clearing big as goal'
-        statePillar.modify(clear='big')
+    def clearone(goal='three:C two:C one:C', statePillar='selected_disk:one target_pillar:C topOfone:!free latest_disk:none latest_pillar:none clear:none'):
+        # Create subgoal to get one free
+        print 'Disk One is not clear. Set clearing Disk One as goal'
+        statePillar.modify(clear='one')
 
-    # Clear disk on top of big if big is not free
-    def execClearBigByRemoving(statePillar='clear:big topOfBig:?x latest_disk:none latest_pillar:none topOfBig:!free'):
-        print 'Big is not free, clearing disk', x , 'which is above big'
+    # Clear disk on top of one if one is not free
+    def execClearoneByRemoving(statePillar='clear:one topOfone:?x latest_disk:none latest_pillar:none topOfone:!free'):
+        print 'Disk One is not free, clearing disk', x , 'which is above Disk One'
         statePillar.modify(clear=x)
 
-    # Clear disk on top of big if big is not free
-    def execClearMidByRemoving(statePillar='clear:mid topOfMid:?x latest_disk:none latest_pillar:none topOfMid:!free'):
-        print 'Mid is not free, clearing disk', x , 'which is above mid'
+    # Clear disk on top of one if one is not free
+    def execCleartwoByRemoving(statePillar='clear:two topOftwo:?x latest_disk:none latest_pillar:none topOftwo:!free'):
+        print 'Disk Two is not free, clearing Disk', x , 'which is above Disk Two'
         statePillar.modify(clear=x)        
 
-    # Small to third
-    def moveSmallToThird(statePillar='clear:small latest_disk:none latest_pillar:none topOfSmall:free big:first'):
-        print 'moving small to third'
+    # three to C
+    def movethreeToC(statePillar='clear:three latest_disk:none latest_pillar:none topOfthree:free one:A'):
+        print 'moving Disk Three to peg C'
         statePillar.modify(clear='none')
-        statePillar.modify(selected_disk='small')
-        statePillar.modify(target_pillar='third')
+        statePillar.modify(selected_disk='three')
+        statePillar.modify(target_pillar='C')
 
-    # Small to first
-    def moveSmallToFirst(statePillar='clear:small latest_disk:none latest_pillar:none topOfSmall:free big:third'):
-        print 'moving small to first'
+    # three to A
+    def movethreeToA(statePillar='clear:three latest_disk:none latest_pillar:none topOfthree:free one:C'):
+        print 'moving Disk three to peg A'
         statePillar.modify(clear='none')
-        statePillar.modify(selected_disk='small')
-        statePillar.modify(target_pillar='first')
+        statePillar.modify(selected_disk='three')
+        statePillar.modify(target_pillar='A')
         
-    # Move mid to second
-    def moveMid(statePillar='clear:mid topOfMid:free latest_disk:none latest_pillar:none small:!second'):
-        print 'moving mid to second'
+    # Move two to B
+    def movetwo(statePillar='clear:two topOftwo:free latest_disk:none latest_pillar:none three:!B'):
+        print 'moving Disk Two to peg B'
         statePillar.modify(clear='none')
-        statePillar.modify(selected_disk='mid')
-        statePillar.modify(target_pillar='second')
+        statePillar.modify(selected_disk='two')
+        statePillar.modify(target_pillar='B')
 
-    # all disk are placed on the third pillar
-    def finished(goal='small:third mid:third big:third',statePillar='small:third mid:third big:third'):
-        print 'All disk are placed on the third pillar'
+    # all disk are placed on the C pillar
+    def finished(goal='three:C two:C one:C',statePillar='three:C two:C one:C'):
+        print 'All disks are placed on the C pillar'
         goal.clear()
         statePillar.clear()
         
 # run the model        
 model=ExpertCountingModel()
 ccm.log_everything(model)
-model.goal.set('small:third mid:third big:third topOfBig:mid topOfMid:small topOfSmall:free')
-model.statePillar.set('topOfBig:mid topOfMid:small topOfSmall:free selected_disk:none target_pillar:none big:first mid:first small:first latest_disk:none latest_pillar:none clear:none')
+model.goal.set('three:C two:C one:C')
+model.statePillar.set('topOfone:two topOftwo:three topOfthree:free selected_disk:none target_pillar:none one:A two:A three:A latest_disk:none latest_pillar:none clear:none')
 model.run()
 
 
